@@ -7,6 +7,8 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@commitlint/cli": "^18.4.1",
+    "@commitlint/config-lerna-scopes": "^18.4.0",
     "@tsconfig/strictest": "^2.0.2",
     "lerna": "^7.4.2",
     "lerna-changelog": "^2.2.0",
