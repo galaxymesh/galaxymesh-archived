@@ -1,5 +1,26 @@
 {
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
   "version": "independent",
-  "npmClient": "yarn"
+  "npmClient": "yarn",
+  "command": {
+    "publish": {
+      "message": "chore(release): publish",
+      "conventionalCommits": true,
+      "createRelease": "github",
+      "logLevel": "verbose"
+    }
+  },
+  "ignoreChanges": [
+    "CHANGELOG.md",
+    "node_modules/**",
+    "package.json",
+    "*.md",
+    ".github/**",
+    "packages/**/.eslintrc.js",
+    "packages/**/.gitignore"
+  ],
+  "changelogPreset": {
+    "name": "conventionalcommits",
+    "issueUrlFormat": "{{host}}/{{owner}}/{{repository}}/issues/{{id}}"
+  }
 }
