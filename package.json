@@ -1,4 +1,10 @@
 {
   "name": "galaxymesh",
-  "packageManager": "yarn@4.0.2"
+  "workspaces": [
+    "packages/*"
+  ],
+  "packageManager": "yarn@4.0.2",
+  "devDependencies": {
+    "lerna": "^7.4.2"
+  }
 }
