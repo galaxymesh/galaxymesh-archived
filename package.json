@@ -1,12 +1,16 @@
 {
   "name": "galaxymesh",
+  "repository": {
+    "url": "git@github.com:galaxymesh/galaxymesh.git"
+  },
   "workspaces": [
     "packages/*"
   ],
-  "packageManager": "yarn@4.0.2",
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.2",
     "lerna": "^7.4.2",
+    "lerna-changelog": "^2.2.0",
     "typescript": "^5.2.2"
-  }
+  },
+  "packageManager": "yarn@4.0.2"
 }
