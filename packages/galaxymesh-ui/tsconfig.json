@@ -1,0 +1,16 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+      "target": "ESNext",
+      "module": "ESNext",
+      "moduleResolution": "Node",
+      "lib": ["DOM", "ESNext"],
+      "jsx": "react-jsx",
+      "baseUrl": "./src",
+      "declaration": true,
+      "emitDeclarationOnly": true,
+      "outDir": "./dist/types",
+      "allowSyntheticDefaultImports": true
+    },
+    "include": ["./src/index.ts"]
+  }
