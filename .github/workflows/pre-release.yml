@@ -35,15 +35,7 @@ jobs:
           run: CHANGED_PACKAGES=$(yarn lerna changed --json | jq -r '.[].name')
           
         - name: Version packages
-          run: |
-            if [ -n "$CHANGED_PACKAGES" ]; then
-                echo "Changed packages detected: $CHANGED_PACKAGES"
-            for PACKAGE_NAME in $CHANGED_PACKAGES; do
-              yarn lerna version --no-private --conventional-commits --conventional-prerelease --include-merged-tags --no-git-tag-version
-            done
-              else
-                echo "No changed packages detected. Skipping lerna version."
-              fi
+          run: ./version-packages.sh "$CHANGED_PACKAGES"
 
         - name: Commit changes
           run: |
@@ -65,10 +57,10 @@ jobs:
         - name: Create GitHub Release
           run: |
             TAGS=($(git tag -l --sort=-version:refname))
-            for TAG in "${TAGS[@]}"; do
+              for TAG in "${TAGS[@]}"; do
                 PACKAGE_NAME=$(grep -oP '(?<=name": ").*?(?=",)' packages/${TAG/\@/\/}/package.json)
-                gh release create $TAG ./packages/$PACKAGE_NAME -t "$TAG"
-            done
+                gh release create $TAG ./packages/$PACKAGE_NAME -t "$TAG" -y
+              done
           env:
             GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
             GITHUB_AUTH: ${{ secrets.GH_TOKEN }}
