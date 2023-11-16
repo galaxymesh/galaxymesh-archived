@@ -1,4 +1,4 @@
-name: Release and Publish to NPM
+name: Pre-Release and Publish to NPM
 on: workflow_dispatch
 
 jobs:
@@ -31,13 +31,28 @@ jobs:
             git config user.name "${{ github.actor }}"
             git config user.email "${{ github.actor}}@users.noreply.github.com"
 
+        - name: Identify changeg packages
+          run: CHANGED_PACKAGES=$(yarn lerna changed --json | jq -r '.[].name')
+          
         - name: Version packages
-          run: yarn lerna version --no-private --conventional-commits --conventional-prerelease --include-merged-tags --no-git-tag-version
+          run: |
+            if [ -n "$CHANGED_PACKAGES" ]; then
+                echo "Changed packages detected: $CHANGED_PACKAGES"
+            for PACKAGE_NAME in $CHANGED_PACKAGES; do
+              yarn lerna version --no-private --conventional-commits --conventional-prerelease --include-merged-tags --no-git-tag-version
+            done
+              else
+                echo "No changed packages detected. Skipping lerna version."
+              fi
 
         - name: Commit changes
           run: |
-            git add .
-            git commit -m "chore: publish"
+              if [ -n "$(git status --porcelain)" ]; then
+                git add .
+                git commit -m "chore: publish"
+              else
+                echo "No changes to commit."
+              fi
 
         - name: Publish packages
           run: yarn lerna publish from-package
