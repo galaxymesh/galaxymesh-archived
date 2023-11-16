@@ -1,0 +1,61 @@
+name: Release and Publish to NPM
+on: workflow_dispatch
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout source code
+          uses: actions/checkout@v4
+          with:
+            node-version: 18
+            registry-url: "https://registry.npmjs.org"
+            scope: "@galaxymesh"
+
+        - name: Monorepo Install
+          uses: ./.github/actions/yarn-nm-install
+          with:
+            cwd: "."
+            enable-corepack: true
+            cache-node-modules: true
+            cache-install-state: true
+
+        - name: Initialize the NPM config
+          run: npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+          env:
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+            GITHUB_AUTH: ${{ secrets.GH_TOKEN }}
+
+        - name: Initialize Git User
+          run: |
+            git config user.name "${{ github.actor }}"
+            git config user.email "${{ github.actor}}@users.noreply.github.com"
+
+        - name: Version packages
+          run: yarn lerna version --no-private --conventional-commits --conventional-graduate --include-merged-tags --no-git-tag-version
+
+        - name: Commit changes
+          run: |
+            git add .
+            git commit -m "chore: publish"
+
+        - name: Publish packages
+          run: yarn lerna publish from-package
+          env:
+            GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+            GITHUB_AUTH: ${{ secrets.GH_TOKEN }}
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+            NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+        - name: Create GitHub Release
+          run: |
+            TAGS=($(git tag -l --sort=-version:refname))
+            for TAG in "${TAGS[@]}"; do
+                PACKAGE_NAME=$(grep -oP '(?<=name": ").*?(?=",)' packages/${TAG/\@/\/}/package.json)
+                gh release create $TAG ./packages/$PACKAGE_NAME -t "$TAG"
+            done
+          env:
+            GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+            GITHUB_AUTH: ${{ secrets.GH_TOKEN }}
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+            NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
