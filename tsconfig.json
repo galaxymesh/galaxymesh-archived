@@ -1,4 +1,4 @@
 {
     "extends": "@tsconfig/strictest/tsconfig.json",
-    "exclude": ["commitlint.config.js"]
+    "exclude": ["commitlint.config.cjs"]
 }

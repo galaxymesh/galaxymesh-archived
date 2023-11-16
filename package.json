@@ -6,11 +6,24 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "commit": "git-cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
+  },
   "devDependencies": {
-    "@commitlint/cli": "^18.4.1",
+    "@commitlint/cli": "^18.4.2",
+    "@commitlint/config-conventional": "^18.4.2",
     "@commitlint/config-lerna-scopes": "^18.4.0",
+    "@commitlint/cz-commitlint": "^18.4.2",
     "@tsconfig/strictest": "^2.0.2",
+    "@types/inquirer": "^9",
+    "commitizen": "^4.3.0",
     "conventional-changelog-conventionalcommits": "^7.0.2",
+    "inquirer": "8",
     "lerna": "^7.4.2",
     "lerna-changelog": "^2.2.0",
     "typescript": "^5.2.2"
