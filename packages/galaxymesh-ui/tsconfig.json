@@ -6,11 +6,14 @@
       "moduleResolution": "Node",
       "lib": ["DOM", "ESNext"],
       "jsx": "react-jsx",
-      "baseUrl": "./src",
+      "baseUrl": ".",
       "declaration": true,
       "emitDeclarationOnly": true,
       "outDir": "./dist/types",
-      "allowSyntheticDefaultImports": true
+      "allowSyntheticDefaultImports": true,
+      "paths": {
+        "*": ["dist/types/*"]
+      }
     },
     "include": ["./src/index.ts"]
   }
