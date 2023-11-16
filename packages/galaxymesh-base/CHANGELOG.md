@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.0](https://github.com/galaxymesh/galaxymesh/compare/@galaxymesh/base@0.1.0...@galaxymesh/base@0.3.0) (2023-11-16)
+
+
+### Features
+
+* **base:** create Box component ([#29](https://github.com/galaxymesh/galaxymesh/issues/29)) ([e613fcc](https://github.com/galaxymesh/galaxymesh/commit/e613fcc94aad718af0b5ca8278a8e74f8667f544)), closes [#9](https://github.com/galaxymesh/galaxymesh/issues/9)
+* **base:** create components for column component ([#27](https://github.com/galaxymesh/galaxymesh/issues/27)) ([732fb94](https://github.com/galaxymesh/galaxymesh/commit/732fb94569184672ddd7ef1b0c43fc920b4402d5)), closes [#26](https://github.com/galaxymesh/galaxymesh/issues/26)
+
+
+
 ## [0.2.0](https://github.com/galaxymesh/galaxymesh/compare/@galaxymesh/base@0.1.0...@galaxymesh/base@0.2.0) (2023-11-16)
 
 
