@@ -1,8 +1,15 @@
+export { default as Backdrop } from './components/Backdrop';
 export { default as Box } from './components/Box';
 export { default as Button } from './components/Button';
 export { default as Checkbox } from './components/Checkbox';
+export { default as Dialog } from './components/Dialog';
+export { default as DialogActions } from './components/DialogActions';
+export { default as DialogContent } from './components/DialogContent';
+export { default as DialogContentText } from './components/DialogContentText';
+export { default as DialogTitle } from './components/DialogTitle';
 export { default as FormControlLabel } from './components/FormControlLabel';
 export { default as IconButton } from './components/IconButton';
 export { default as Paper } from './components/Paper';
 export { default as Popper } from './components/Popper';
+export { default as Slide } from './components/Slide';
 export { default as Tooltip } from './components/Tooltip';
