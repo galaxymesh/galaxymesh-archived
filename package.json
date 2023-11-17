@@ -4,6 +4,7 @@
     "url": "git@github.com:galaxymesh/galaxymesh.git"
   },
   "workspaces": [
+    "apps/*",
     "packages/*"
   ],
   "scripts": {
