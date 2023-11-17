@@ -54,7 +54,7 @@ jobs:
               fi
 
         - name: Publish packages
-          run: yarn lerna publish from-package -y
+          run: yarn lerna publish from-git -y
           env:
             GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
             GITHUB_AUTH: ${{ secrets.GH_TOKEN }}
