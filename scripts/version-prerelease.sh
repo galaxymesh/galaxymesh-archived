@@ -8,7 +8,7 @@ CHANGED_PACKAGES=$(yarn lerna changed --json | jq -r '.[].name')
 
 if [ -n "$CHANGED_PACKAGES" ]; then
   echo "Changed packages detected: $CHANGED_PACKAGES"
-  yarn lerna version --no-private --conventional-commits --conventional-graduate --include-merged-tags --no-git-tag-version --yes
+  yarn lerna version --no-private --conventional-commits --conventional-prerelease --include-merged-tags --no-git-tag-version --yes
 
   # Stage changes to package.json files
   for PACKAGE_NAME in $CHANGED_PACKAGES; do
