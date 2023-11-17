@@ -8,12 +8,16 @@
     "packages/*"
   ],
   "scripts": {
+    "clean-changelog": "lernacleanchangelog '**'",
     "commit": "git-cz"
   },
   "config": {
     "commitizen": {
       "path": "@commitlint/cz-commitlint"
     }
+  },
+  "dependencies": {
+    "lerna-clean-changelogs": "^5.0.12"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.2",
@@ -27,6 +31,7 @@
     "inquirer": "8",
     "lerna": "^7.4.2",
     "lerna-changelog": "^2.2.0",
+    "lerna-clean-changelogs-cli": "^3.0.13",
     "typescript": "^5.2.2"
   },
   "packageManager": "yarn@4.0.2"
