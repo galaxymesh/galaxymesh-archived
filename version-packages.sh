@@ -12,7 +12,7 @@ if [ -n "$CHANGED_PACKAGES" ]; then
 
   # Stage changes to package.json files
   for PACKAGE_NAME in $CHANGED_PACKAGES; do
-    PACKAGE_PATH="packages/$(echo $PACKAGE_NAME | tr -d '@/')"
+    PACKAGE_PATH="packages/$(echo $PACKAGE_NAME | tr -d '@' | sed 's/\//-/')"
     grep -q "\"name\": \"$PACKAGE_NAME\"" "$PACKAGE_PATH/package.json" && git add "$PACKAGE_PATH/package.json"
   done
 else
