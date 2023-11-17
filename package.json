@@ -5,7 +5,8 @@
   },
   "workspaces": [
     "!apps/next-14",
-    "packages/*"
+    "packages/*",
+    "packages/utilities/*"
   ],
   "scripts": {
     "prepare": "lefthook install",
