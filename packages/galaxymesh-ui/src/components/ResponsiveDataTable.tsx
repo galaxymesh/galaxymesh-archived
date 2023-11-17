@@ -27,7 +27,7 @@ export interface ResponsiveDataTableProps {
   colViews?: Record<string, boolean> | undefined;
 }
 
-function ResponsiveDataTable({
+export function ResponsiveDataTable({
   data,
   columns,
   options = {},
