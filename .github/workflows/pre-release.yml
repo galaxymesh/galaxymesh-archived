@@ -49,9 +49,13 @@ jobs:
               if [ -n "$(git status --porcelain)" ]; then
                 git add .
                 git commit -m "chore: publish"
+                git push origin HEAD
               else
                 echo "No changes to commit."
               fi
+
+        - name: Create Git tags
+          run: ./create-multiple-git-tag.sh
 
         - name: Publish packages
           run: yarn lerna publish from-package --yes
