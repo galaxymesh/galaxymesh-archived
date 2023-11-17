@@ -8,8 +8,26 @@
     "packages/*"
   ],
   "scripts": {
+    "build": "lerna run build",
+    "build:packages": "lerna run build --stream",
+    "check-changed": "lerna changed --json",
+    "check-latest": "lerna version --no-private --conventional-commits --conventional-graduate --include-merged-tags --no-push --no-git-tag-version",
+    "check-latest:ci": "lerna version --no-private --conventional-commits --conventional-graduate --include-merged-tags --no-push --no-git-tag-version --yes",
+    "check-next": "lerna version  --no-private --conventional-commits --conventional-prerelease --include-merged-tags --preid alpha --no-push --no-git-tag-version",
     "clean-changelog": "lernacleanchangelog '**'",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "release-latest": "lerna publish from-package && yarn run update-lock:latest",
+    "release-latest:ci": "lerna publish from-package --yes && yarn run update-lock:latest",
+    "release-next": "lerna publish from-package --no-verify-access --dist-tag next",
+    "release-next:ci": "lerna publish from-package --no-verify-access --dist-tag next --yes",
+    "update-latest": "yarn build && lerna version --conventional-commits --conventional-graduate --create-release github && yarn clean-changelog && yarn update-tag:latest",
+    "update-latest:ci": "yarn build && lerna version --conventional-commits --conventional-graduate --create-release github --yes && yarn clean-changelog && yarn update-tag:latest",
+    "update-lock:latest": "sh ./scripts/update_lock_latest.sh",
+    "update-lock:next": "sh ./scripts/update_lock_next.sh",
+    "update-next": "yarn build && lerna version --conventional-commits --conventional-prerelease --preid alpha --create-release github  && yarn clean-changelog && yarn update-tag:next",
+    "update-next:ci": "yarn build && lerna version --conventional-commits --conventional-prerelease --preid alpha --create-release github --yes && yarn clean-changelog && yarn update-tag:next",
+    "update-tag:latest": "sh ./scripts/update_tag_latest.sh",
+    "update-tag:next": "sh ./scripts/update_tag_next.sh"
   },
   "config": {
     "commitizen": {
