@@ -15,7 +15,7 @@ jobs:
           with:
             node-version: 18
             registry-url: "https://registry.npmjs.org"
-            scope: "@galaxy mesh"
+            scope: "@galaxymesh"
 
         - name: Monorepo Install
           uses: ./.github/actions/yarn-nm-install
