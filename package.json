@@ -8,6 +8,7 @@
     "packages/*"
   ],
   "scripts": {
+    "prepare": "lefthook install",
     "build": "lerna run build",
     "build:packages": "lerna run build --stream",
     "check-changed": "lerna changed --json",
@@ -15,7 +16,8 @@
     "check-latest:ci": "lerna version --no-private --conventional-commits --conventional-graduate --include-merged-tags --no-push --no-git-tag-version --yes",
     "check-next": "lerna version  --no-private --conventional-commits --conventional-prerelease --include-merged-tags --preid alpha --no-push --no-git-tag-version",
     "clean-changelog": "lernacleanchangelog '**'",
-    "commit": "git-cz",
+    "cz-commit": "git-cz",
+    "cz-commit-hook": "cz --hook",
     "release-latest": "lerna publish from-package && yarn run update-lock:latest",
     "release-latest:ci": "lerna publish from-package --yes && yarn run update-lock:latest",
     "release-next": "lerna publish from-package --no-verify-access --dist-tag next",
@@ -47,6 +49,7 @@
     "commitizen": "^4.3.0",
     "conventional-changelog-conventionalcommits": "^7.0.2",
     "inquirer": "8",
+    "lefthook": "^1.5.2",
     "lerna": "^7.4.2",
     "lerna-changelog": "^2.2.0",
     "lerna-clean-changelogs-cli": "^3.0.13",
