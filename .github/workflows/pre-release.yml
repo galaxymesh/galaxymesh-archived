@@ -3,64 +3,64 @@ on: workflow_dispatch
 
 jobs:
     release:
-        runs-on: ubuntu-latest
-        steps:
-        - name: Checkout source code
-          uses: actions/checkout@v4
-          with:
-              fetch-depth: 0
-              
-        - name: Setup Node.js 18.x
-          uses: actions/setup-node@v4
-          with:
-            node-version: 18
-            registry-url: "https://registry.npmjs.org"
-            scope: "@galaxymesh"
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+            fetch-depth: 0
+            
+      - name: Setup Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          registry-url: "https://registry.npmjs.org"
+          scope: "@galaxymesh"
 
-        - name: Monorepo Install
-          uses: ./.github/actions/yarn-nm-install
-          with:
-            cwd: "."
-            enable-corepack: true
-            cache-node-modules: true
-            cache-install-state: true
+      - name: Monorepo Install
+        uses: ./.github/actions/yarn-nm-install
+        with:
+          cwd: "."
+          enable-corepack: true
+          cache-node-modules: true
+          cache-install-state: true
 
-        - name: Initialize the NPM config
-          run: npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
-          env:
-            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-            GITHUB_AUTH: ${{ secrets.GH_TOKEN }}
+      - name: Initialize the NPM config
+        run: npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_AUTH: ${{ secrets.GH_TOKEN }}
 
-        - name: Initialize Git User
-          run: |
-            git config user.name "${{ github.actor }}"
-            git config user.email "${{ github.actor}}@users.noreply.github.com"
+      - name: Initialize Git User
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor}}@users.noreply.github.com"
 
-        - name: Identify changed packages
-          run: |
-              CHANGED_PACKAGES=$(yarn lerna changed --json | jq -r '.[].name')
-              echo $CHANGED_PACKAGES
-          
-        - name: Version packages
-          run: ./version-packages.sh "$CHANGED_PACKAGES"
+      - name: Identify changed packages
+        run: |
+            CHANGED_PACKAGES=$(yarn lerna changed --json | jq -r '.[].name')
+            echo $CHANGED_PACKAGES
+        
+      - name: Version packages
+        run: ./scripts/version-prerelease.sh "$CHANGED_PACKAGES"
 
-        - name: Commit changes
-          run: |
-              if [ -n "$(git status --porcelain)" ]; then
-                git add .
-                git commit -m "chore: publish"
-                git push origin HEAD
-              else
-                echo "No changes to commit."
-              fi
+      - name: Commit changes
+        run: |
+            if [ -n "$(git status --porcelain)" ]; then
+              git add .
+              git commit -m "chore: publish"
+              git push origin HEAD
+            else
+              echo "No changes to commit."
+            fi
 
-        - name: Create Git tags
-          run: ./create-multiple-git-tag.sh
+      - name: Create Git tags
+        run: ./scripts/create-multiple-git-tag.sh
 
-        - name: Publish packages
-          run: yarn lerna publish from-package --yes
-          env:
-            GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-            GITHUB_AUTH: ${{ secrets.GH_TOKEN }}
-            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-            NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish packages
+        run: yarn release-latest:ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_AUTH: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

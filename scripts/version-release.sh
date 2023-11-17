@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Usage: version-packages.sh
-# Example: version-packages.sh
+# Usage: version-release.sh
+# Example: version-release.sh
 
 # Get the list of changed packages using Lerna
 CHANGED_PACKAGES=$(yarn lerna changed --json | jq -r '.[].name')
